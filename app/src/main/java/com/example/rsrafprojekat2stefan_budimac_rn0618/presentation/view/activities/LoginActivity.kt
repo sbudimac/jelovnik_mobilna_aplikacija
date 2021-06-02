@@ -6,7 +6,6 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.example.rsrafprojekat2stefan_budimac_rn0618.MainActivity
 import com.example.rsrafprojekat2stefan_budimac_rn0618.R
 import com.example.rsrafprojekat2stefan_budimac_rn0618.databinding.ActivityLoginBinding
 
@@ -42,7 +41,7 @@ class LoginActivity : AppCompatActivity(R.layout.activity_login) {
             } else {
                 loginInfo.edit().putString(PREF_KORISNIK_IME, binding.loginIme.text.toString()).apply()
                 loginInfo.edit().putString(PREF_KORISNIK_PIN, binding.loginPin.text.toString()).apply()
-                val intent: Intent = Intent(this, MainActivity::class.java)
+                val intent: Intent = Intent(this, CategoryActivity::class.java)
                 startActivity(intent)
                 finish()
             }

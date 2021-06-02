@@ -10,6 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Rsrafprojekat2stefan_budimac_rn0618">
+        <activity android:name=".presentation.view.activities.CategoryActivity" />
         <activity android:name=".presentation.view.activities.LoginActivity" />
         <activity
             android:name=".presentation.view.activities.SplashActivity"
@@ -20,7 +21,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>
