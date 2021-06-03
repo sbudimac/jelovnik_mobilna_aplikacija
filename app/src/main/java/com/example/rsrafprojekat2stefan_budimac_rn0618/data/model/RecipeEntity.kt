@@ -13,6 +13,6 @@ data class RecipeEntity(
     val publisher: String,
     @PrimaryKey
     @ColumnInfo(name = "recipe_id")
-    val recipeId: Long,
+    val recipeId: String,
     val title: String
 )

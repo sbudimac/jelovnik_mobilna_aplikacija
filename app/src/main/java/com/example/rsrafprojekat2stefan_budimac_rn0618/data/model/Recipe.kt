@@ -4,6 +4,6 @@ data class Recipe(
     val imageUrl: String,
     val socialUrl: Double,
     val publisher: String,
-    val id: Long,
+    val id: String,
     val title: String
 )

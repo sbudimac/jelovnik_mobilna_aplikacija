@@ -7,11 +7,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.rsrafprojekat2stefan_budimac_rn0618.R
 import com.example.rsrafprojekat2stefan_budimac_rn0618.databinding.FragmentCategoryListBinding
 import com.example.rsrafprojekat2stefan_budimac_rn0618.presentation.contract.CategoryContract
+import com.example.rsrafprojekat2stefan_budimac_rn0618.presentation.view.activities.CategoryActivity
 import com.example.rsrafprojekat2stefan_budimac_rn0618.presentation.view.recycler.adapter.CategoryAdapter
 import com.example.rsrafprojekat2stefan_budimac_rn0618.presentation.view.state.CategoriesState
 import com.example.rsrafprojekat2stefan_budimac_rn0618.presentation.viewmodel.CategoryViewModel
@@ -51,7 +54,20 @@ class CategoryListFragment : Fragment(R.layout.fragment_category_list) {
 
     private fun initRecycler() {
         binding.categoriesRv.layoutManager = LinearLayoutManager(context)
-        adapter = CategoryAdapter(Glide.with(this))
+        adapter = CategoryAdapter(Glide.with(this)) {
+            (activity as CategoryActivity).supportFragmentManager.commit {
+                var fragment: Fragment?
+                fragment = RecipeListFragment().apply {
+                    arguments = Bundle().apply {
+                        putString("category", it.title)
+                    }
+                }
+                val transaction: FragmentTransaction =
+                    (activity as CategoryActivity).supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.categories_fcv, fragment)
+                transaction.commit()
+            }
+        }
         binding.categoriesRv.adapter = adapter
     }
 

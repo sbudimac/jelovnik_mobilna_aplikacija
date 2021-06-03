@@ -22,9 +22,9 @@ class RecipeRepositoryImpl(
                     RecipeEntity(
                         it.imageUrl,
                         it.socialUrl,
-                        it.publisher,
+                        it.publisher.trim(),
                         it.id,
-                        it.title
+                        it.title.trim()
                     )
                 }
                 localDataSource.deleteAndInsertAllRecipes(entities)

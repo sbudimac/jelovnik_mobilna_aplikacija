@@ -7,6 +7,6 @@ import retrofit2.http.Query
 
 interface RecipeService {
 
-    @GET("recipes/?q={q}&page={page}")
+    @GET("recipes/")
     fun getAllRecipes(@Query("q") q: String, @Query("page") page: Int = 1): Observable<RecipesResponse>
 }

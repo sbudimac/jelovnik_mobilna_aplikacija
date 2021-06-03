@@ -9,11 +9,14 @@ import com.example.rsrafprojekat2stefan_budimac_rn0618.databinding.LayoutCategor
 import com.example.rsrafprojekat2stefan_budimac_rn0618.presentation.view.recycler.diff.CategoryDiffCallback
 import com.example.rsrafprojekat2stefan_budimac_rn0618.presentation.view.recycler.viewholder.CategoryViewHolder
 
-class CategoryAdapter(private val glide: RequestManager): ListAdapter<Category, CategoryViewHolder>(CategoryDiffCallback()) {
+class CategoryAdapter(private val glide: RequestManager, private val onCategoryClicked: (Category) -> Unit): ListAdapter<Category, CategoryViewHolder>(CategoryDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
         val itemBinding = LayoutCategoryItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return CategoryViewHolder(itemBinding, glide)
+        return CategoryViewHolder(itemBinding, glide) {
+            val category = getItem(it)
+            onCategoryClicked.invoke(category)
+        }
     }
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
