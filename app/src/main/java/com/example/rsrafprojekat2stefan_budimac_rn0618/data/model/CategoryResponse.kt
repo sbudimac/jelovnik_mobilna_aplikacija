@@ -1,7 +1,5 @@
 package com.example.rsrafprojekat2stefan_budimac_rn0618.data.model
 
 data class CategoryResponse(
-    val id: String,
-    val title: String,
-    val imageUrl: String
+    val categories: List<Category>
 )

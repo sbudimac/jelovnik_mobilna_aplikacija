@@ -6,7 +6,7 @@ import com.example.rsrafprojekat2stefan_budimac_rn0618.data.model.Category
 class CategoryDiffCallback : DiffUtil.ItemCallback<Category>() {
 
     override fun areItemsTheSame(oldItem: Category, newItem: Category): Boolean {
-        return oldItem.id == newItem.id
+        return oldItem.imageUrl == newItem.imageUrl
     }
 
     override fun areContentsTheSame(oldItem: Category, newItem: Category): Boolean {

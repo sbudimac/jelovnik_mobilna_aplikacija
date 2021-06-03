@@ -1,6 +1,7 @@
 package com.example.rsrafprojekat2stefan_budimac_rn0618.application
 
 import android.app.Application
+import com.example.rsrafprojekat2stefan_budimac_rn0618.modules.categoryModule
 import com.example.rsrafprojekat2stefan_budimac_rn0618.modules.coreModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidFileProperties
@@ -28,13 +29,15 @@ class FoodRecepiesApp : Application() {
 
     private fun initKoin() {
         val modules = listOf(
-            coreModule
+            coreModule,
+            categoryModule
         )
         startKoin {
             androidLogger(Level.ERROR)
             androidContext(this@FoodRecepiesApp)
             androidFileProperties()
             fragmentFactory()
+            modules(modules)
         }
     }
 }

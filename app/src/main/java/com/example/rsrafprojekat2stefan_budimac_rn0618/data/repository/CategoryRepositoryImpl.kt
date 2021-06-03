@@ -16,9 +16,8 @@ class CategoryRepositoryImpl(
         return remoteDataSource
             .getAllCategories()
             .doOnNext {
-                val entities = it.map {
+                val entities = it.categories.map {
                     CategoryEntity(
-                        it.id,
                         it.title,
                         it.imageUrl
                     )
@@ -36,9 +35,8 @@ class CategoryRepositoryImpl(
             .map {
                 it.map {
                     Category(
-                        it.categoryId,
-                        it.title,
-                        it.imageURL
+                        it.imageURL,
+                        it.title
                     )
                 }
             }

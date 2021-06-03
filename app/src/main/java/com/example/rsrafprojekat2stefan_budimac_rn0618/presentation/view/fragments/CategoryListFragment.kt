@@ -4,10 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ListAdapter
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.rsrafprojekat2stefan_budimac_rn0618.R
 import com.example.rsrafprojekat2stefan_budimac_rn0618.databinding.FragmentCategoryListBinding
 import com.example.rsrafprojekat2stefan_budimac_rn0618.presentation.contract.CategoryContract
@@ -50,7 +51,7 @@ class CategoryListFragment : Fragment(R.layout.fragment_category_list) {
 
     private fun initRecycler() {
         binding.categoriesRv.layoutManager = LinearLayoutManager(context)
-        adapter = CategoryAdapter()
+        adapter = CategoryAdapter(Glide.with(this))
         binding.categoriesRv.adapter = adapter
     }
 
@@ -88,9 +89,9 @@ class CategoryListFragment : Fragment(R.layout.fragment_category_list) {
     }
 
     private fun showLoadingState(loading: Boolean) {
-        //binding.inputEt.isVisible = !loading
-        //binding.listRv.isVisible = !loading
-        //binding.loadingPb.isVisible = loading
+        binding.categorySearchView.isVisible = !loading
+        binding.categoriesRv.isVisible = !loading
+        binding.loadingPb.isVisible = loading
     }
 
     override fun onDestroyView() {

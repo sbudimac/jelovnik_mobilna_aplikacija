@@ -2,7 +2,10 @@ package com.example.rsrafprojekat2stefan_budimac_rn0618.presentation.view.activi
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentTransaction
+import com.example.rsrafprojekat2stefan_budimac_rn0618.R
 import com.example.rsrafprojekat2stefan_budimac_rn0618.databinding.ActivityCategoryBinding
+import com.example.rsrafprojekat2stefan_budimac_rn0618.presentation.view.fragments.CategoryListFragment
 
 class CategoryActivity : AppCompatActivity() {
 
@@ -16,6 +19,12 @@ class CategoryActivity : AppCompatActivity() {
     }
 
     private fun init() {
+        initUi()
+    }
 
+    private fun initUi() {
+        val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
+        transaction.add(R.id.categories_fcv, CategoryListFragment())
+        transaction.commit()
     }
 }
