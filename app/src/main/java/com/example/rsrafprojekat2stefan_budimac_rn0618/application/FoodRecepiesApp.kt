@@ -3,6 +3,7 @@ package com.example.rsrafprojekat2stefan_budimac_rn0618.application
 import android.app.Application
 import com.example.rsrafprojekat2stefan_budimac_rn0618.modules.categoryModule
 import com.example.rsrafprojekat2stefan_budimac_rn0618.modules.coreModule
+import com.example.rsrafprojekat2stefan_budimac_rn0618.modules.recipeModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidFileProperties
 import org.koin.android.ext.koin.androidLogger
@@ -30,7 +31,8 @@ class FoodRecepiesApp : Application() {
     private fun initKoin() {
         val modules = listOf(
             coreModule,
-            categoryModule
+            categoryModule,
+            recipeModule
         )
         startKoin {
             androidLogger(Level.ERROR)
