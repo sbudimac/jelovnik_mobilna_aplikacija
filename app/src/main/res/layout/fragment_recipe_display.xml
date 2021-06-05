@@ -7,7 +7,7 @@
     <ImageView
         android:id="@+id/meal_img"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="180dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -20,43 +20,63 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/meal_img"
+        app:layout_constraintBottom_toTopOf="@id/recipe_linear"
         android:textSize="32sp"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@id/ingredients_tv"/>
+        android:layout_margin="10dp"
+        android:textColor="@color/black" />
 
-    <TextView
-        android:id="@+id/ingredients_tv"
-        android:layout_width="320dp"
+    <LinearLayout
+        android:id="@+id/recipe_linear"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/meal_title"
-        app:layout_constraintEnd_toStartOf="@id/meal_100"
-        app:layout_constraintBottom_toTopOf="@id/ingredients_list"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        android:text="@string/ingredients"
-        android:layout_marginStart="10dp" />
-
-    <TextView
-        android:id="@+id/meal_100"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/ingredients_tv"
-        app:layout_constraintTop_toBottomOf="@id/meal_title"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/meal_title"
         app:layout_constraintBottom_toTopOf="@id/ingredients_list"
-        android:textColor="@color/red"
-        android:textSize="28sp"
-        android:text="@string/_100" />
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/ingredients_tv"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="start|center_vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/meal_title"
+            app:layout_constraintEnd_toStartOf="@id/meal_100"
+            app:layout_constraintBottom_toTopOf="@id/ingredients_list"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:text="@string/ingredients"
+            android:layout_marginStart="10dp" />
+
+        <TextView
+            android:id="@+id/meal_100"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="start|center_vertical"
+            app:layout_constraintStart_toEndOf="@id/ingredients_tv"
+            app:layout_constraintTop_toBottomOf="@id/meal_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/ingredients_list"
+            android:textColor="@color/red"
+            android:textSize="24sp"
+            android:layout_marginEnd="15dp"
+            android:text="@string/_100" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/ingredients_list"
         android:layout_width="match_parent"
-        android:layout_height="320dp"
+        android:layout_height="180dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/meal_100"
+        app:layout_constraintTop_toBottomOf="@id/recipe_linear"
         app:layout_constraintBottom_toTopOf="@id/save_recipe"
+        android:scrollbars="vertical"
         android:layout_margin="5dp" />
 
     <ImageButton
@@ -86,10 +106,10 @@
         android:id="@+id/loadingPbMeal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="gone"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:progress="25"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

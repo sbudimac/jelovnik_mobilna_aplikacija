@@ -98,6 +98,16 @@ class CategoryListFragment : Fragment(R.layout.fragment_category_list) {
         }
 
         )
+
+        binding.menu.setOnClickListener {
+            (activity as CategoryActivity).supportFragmentManager.commit {
+                var fragment: Fragment = MenuFragment()
+                val transaction: FragmentTransaction =
+                    (activity as CategoryActivity).supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.categories_fcv, fragment)
+                transaction.commit()
+            }
+        }
     }
 
     private fun initObservers() {

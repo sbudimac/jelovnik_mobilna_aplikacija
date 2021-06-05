@@ -35,6 +35,23 @@ class RecipeRepositoryImpl(
             }
     }
 
+    override fun getAllById(id: String): Observable<List<Recipe>> {
+        return localDataSource
+            .getById(id)
+            .map {
+                it.map {
+                    Recipe(
+                        it.imageUrl,
+                        it.socialUrl,
+                        it.publisher,
+                        it.recipeId,
+                        it.title,
+                        ArrayList()
+                    )
+                }
+            }
+    }
+
     override fun getAllByCategory(category: String): Observable<List<Recipe>> {
         return localDataSource
             .getByCategory(category)

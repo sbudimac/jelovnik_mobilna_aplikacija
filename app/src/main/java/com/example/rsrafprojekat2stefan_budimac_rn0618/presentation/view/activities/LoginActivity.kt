@@ -41,7 +41,7 @@ class LoginActivity : AppCompatActivity(R.layout.activity_login) {
             } else {
                 loginInfo.edit().putString(PREF_KORISNIK_IME, binding.loginIme.text.toString()).apply()
                 loginInfo.edit().putString(PREF_KORISNIK_PIN, binding.loginPin.text.toString()).apply()
-                val intent: Intent = Intent(this, CategoryActivity::class.java)
+                val intent = Intent(this, CategoryActivity::class.java)
                 startActivity(intent)
                 finish()
             }

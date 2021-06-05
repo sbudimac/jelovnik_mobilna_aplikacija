@@ -2,6 +2,7 @@ package com.example.rsrafprojekat2stefan_budimac_rn0618.presentation.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.rsrafprojekat2stefan_budimac_rn0618.data.model.Recipe
 import com.example.rsrafprojekat2stefan_budimac_rn0618.data.model.Resource
 import com.example.rsrafprojekat2stefan_budimac_rn0618.data.repository.RecipeRepository
 import com.example.rsrafprojekat2stefan_budimac_rn0618.presentation.contract.RecipeContract
@@ -18,6 +19,7 @@ class RecipeViewModel(
 
     private val subscriptions = CompositeDisposable()
     override val recipeState: MutableLiveData<RecipesState> = MutableLiveData()
+    override val recipes: MutableLiveData<List<Recipe>> = MutableLiveData(ArrayList())
     override fun fetchAllRecipes(q: String) {
         val subscription = recipeRepository
             .fetchAllRecipes(q)
@@ -34,6 +36,24 @@ class RecipeViewModel(
                 },
                 {
                     recipeState.value = RecipesState.Error("Error happened while fetching data from the server")
+                    Timber.e(it)
+                }
+            )
+        subscriptions.add(subscription)
+    }
+
+    override fun getAllById(id: String) {
+        val subscription = recipeRepository
+            .getAllById(id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    recipeState.value = RecipesState.Success(it)
+                    recipes.value = it
+                },
+                {
+                    recipeState.value = RecipesState.Error("Error happened while fetching data from database")
                     Timber.e(it)
                 }
             )

@@ -1,6 +1,8 @@
 package com.example.rsrafprojekat2stefan_budimac_rn0618.presentation.view.fragments
 
+import android.content.Intent
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,14 +11,13 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.rsrafprojekat2stefan_budimac_rn0618.R
-import com.example.rsrafprojekat2stefan_budimac_rn0618.data.model.Ingredient
 import com.example.rsrafprojekat2stefan_budimac_rn0618.databinding.FragmentRecipeDisplayBinding
 import com.example.rsrafprojekat2stefan_budimac_rn0618.presentation.contract.IngredientContract
 import com.example.rsrafprojekat2stefan_budimac_rn0618.presentation.view.activities.CategoryActivity
+import com.example.rsrafprojekat2stefan_budimac_rn0618.presentation.view.activities.SaveRecipeActivity
 import com.example.rsrafprojekat2stefan_budimac_rn0618.presentation.view.state.IngredientsState
 import com.example.rsrafprojekat2stefan_budimac_rn0618.presentation.viewmodel.IngredientViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -68,10 +69,11 @@ class RecipeDisplayFragment : Fragment(R.layout.fragment_recipe_display) {
     private fun initUi() {
         Glide.with(this).load(imageUrl).dontAnimate().into(binding.mealImg)
         binding.mealTitle.text = title
-        var ingredientsTxt = ""
+        binding.ingredientsList.setMovementMethod(ScrollingMovementMethod())
         ingredientViewModel.ingredients.observe(viewLifecycleOwner, Observer {
+            var ingredientsTxt = ""
             for (ingredient in it) {
-                ingredientsTxt += ingredient
+                ingredientsTxt += ingredient.name
                 ingredientsTxt += System.lineSeparator()
             }
             binding.ingredientsList.text = ingredientsTxt
@@ -85,6 +87,16 @@ class RecipeDisplayFragment : Fragment(R.layout.fragment_recipe_display) {
                     (activity as CategoryActivity).supportFragmentManager.beginTransaction()
                 transaction.replace(R.id.categories_fcv, CategoryListFragment())
                 transaction.commit()
+            }
+        }
+
+        binding.saveRecipe.setOnClickListener {
+            activity?.let{
+                val intent = Intent (it, SaveRecipeActivity::class.java)
+                intent.putExtra("title", title)
+                intent.putExtra("imageUrl", imageUrl)
+                intent.putExtra("id", id)
+                it.startActivity(intent)
             }
         }
     }

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -13,10 +14,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.rsrafprojekat2stefan_budimac_rn0618.R
 import com.example.rsrafprojekat2stefan_budimac_rn0618.databinding.FragmentRecipeListBinding
+import com.example.rsrafprojekat2stefan_budimac_rn0618.presentation.contract.IngredientContract
 import com.example.rsrafprojekat2stefan_budimac_rn0618.presentation.contract.RecipeContract
 import com.example.rsrafprojekat2stefan_budimac_rn0618.presentation.view.activities.CategoryActivity
 import com.example.rsrafprojekat2stefan_budimac_rn0618.presentation.view.recycler.adapter.RecipeAdapter
 import com.example.rsrafprojekat2stefan_budimac_rn0618.presentation.view.state.RecipesState
+import com.example.rsrafprojekat2stefan_budimac_rn0618.presentation.viewmodel.IngredientViewModel
 import com.example.rsrafprojekat2stefan_budimac_rn0618.presentation.viewmodel.RecipeViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
@@ -24,6 +27,7 @@ import timber.log.Timber
 class RecipeListFragment : Fragment(R.layout.fragment_recipe_list) {
 
     private val recipeViewModel: RecipeContract.ViewModel by sharedViewModel<RecipeViewModel>()
+    private val ingredientViewModel: IngredientContract.ViewModel by sharedViewModel<IngredientViewModel>()
     private var _binding: FragmentRecipeListBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: RecipeAdapter
@@ -84,6 +88,29 @@ class RecipeListFragment : Fragment(R.layout.fragment_recipe_list) {
     }
 
     private fun initListeners() {
+        binding.recipeSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                (activity as CategoryActivity).supportFragmentManager.commit {
+                    var fragment: Fragment?
+                    fragment = RecipeListFragment().apply {
+                        arguments = Bundle().apply {
+                            putString("recipe", p0)
+                        }
+                    }
+                    val transaction: FragmentTransaction =
+                        (activity as CategoryActivity).supportFragmentManager.beginTransaction()
+                    transaction.replace(R.id.categories_fcv, fragment)
+                    transaction.commit()
+                }
+                return false
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                return false
+            }
+        }
+
+        )
         binding.recipeBack.setOnClickListener {
             (activity as CategoryActivity).supportFragmentManager.commit {
                 val transaction: FragmentTransaction =
@@ -100,6 +127,8 @@ class RecipeListFragment : Fragment(R.layout.fragment_recipe_list) {
             renderState(it)
         })
         if (category == "") {
+            //ingredientViewModel.getAllRecipeIngredients(rId = )
+            //ingredientViewModel.fetchAllRecipeIngredients(id)
             recipeViewModel.getAllByMeal(recipe)
             recipeViewModel.getAllByIngredient(recipe)
             recipeViewModel.fetchAllRecipes(recipe)
@@ -130,6 +159,7 @@ class RecipeListFragment : Fragment(R.layout.fragment_recipe_list) {
     }
 
     private fun showLoadingState(loading: Boolean) {
+        binding.recipeBack.isVisible = !loading
         binding.recipeSearchView.isVisible = !loading
         binding.recipesRv.isVisible = !loading
         binding.loadingPbRecipes.isVisible = loading

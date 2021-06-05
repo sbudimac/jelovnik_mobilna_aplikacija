@@ -11,7 +11,7 @@ abstract class IngredientDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insertAllRecipeIngredients(entities: List<IngredientEntity>): Completable
 
-    @Query("SELECT * FROM ingredients WHERE recipe_id = :rId")
+    @Query("SELECT * FROM ingredients WHERE ingredients.recipe_id LIKE :rId")
     abstract fun getAllRecipeIngredients(rId: String): Observable<List<IngredientEntity>>
 
     @Query("DELETE FROM ingredients")

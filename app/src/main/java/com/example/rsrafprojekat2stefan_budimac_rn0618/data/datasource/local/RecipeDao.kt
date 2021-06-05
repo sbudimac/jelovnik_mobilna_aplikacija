@@ -23,6 +23,9 @@ abstract class RecipeDao {
         insertAllRecipes(entities).blockingAwait()
     }
 
+    @Query("SELECT * FROM recipes WHERE recipes.recipe_id LIKE :id")
+    abstract fun getById(id: String): Observable<List<RecipeEntity>>
+
     @Query("SELECT * FROM recipes WHERE title LIKE '%' || :category || '%'")
     abstract fun getByCategory(category: String): Observable<List<RecipeEntity>>
 

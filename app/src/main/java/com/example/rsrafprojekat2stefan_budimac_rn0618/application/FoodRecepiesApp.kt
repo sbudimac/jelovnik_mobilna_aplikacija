@@ -1,10 +1,7 @@
 package com.example.rsrafprojekat2stefan_budimac_rn0618.application
 
 import android.app.Application
-import com.example.rsrafprojekat2stefan_budimac_rn0618.modules.categoryModule
-import com.example.rsrafprojekat2stefan_budimac_rn0618.modules.coreModule
-import com.example.rsrafprojekat2stefan_budimac_rn0618.modules.ingredientModule
-import com.example.rsrafprojekat2stefan_budimac_rn0618.modules.recipeModule
+import com.example.rsrafprojekat2stefan_budimac_rn0618.modules.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidFileProperties
 import org.koin.android.ext.koin.androidLogger
@@ -34,7 +31,8 @@ class FoodRecepiesApp : Application() {
             coreModule,
             categoryModule,
             recipeModule,
-            ingredientModule
+            ingredientModule,
+            mealModule
         )
         startKoin {
             androidLogger(Level.ERROR)
