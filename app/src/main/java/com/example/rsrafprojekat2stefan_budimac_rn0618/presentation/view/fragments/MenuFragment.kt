@@ -56,6 +56,18 @@ class MenuFragment : Fragment(R.layout.fragment_menu) {
         adapter = MenuAdapter(Glide.with(this)) {
             (activity as CategoryActivity).supportFragmentManager.commit {
                 var fragment: Fragment?
+                fragment = RecipeDisplayFragment().apply {
+                    arguments = Bundle().apply {
+                        putString("imageUrl", it.image)
+                        putString("title", it.title)
+                        putString("id", it.recipeId)
+                        putString("publisher", it.category)
+                    }
+                }
+                val transaction: FragmentTransaction =
+                    (activity as CategoryActivity).supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.categories_fcv, fragment)
+                transaction.commit()
             }
         }
         binding.menusRv.adapter = adapter

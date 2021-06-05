@@ -27,7 +27,6 @@ import timber.log.Timber
 class RecipeListFragment : Fragment(R.layout.fragment_recipe_list) {
 
     private val recipeViewModel: RecipeContract.ViewModel by sharedViewModel<RecipeViewModel>()
-    private val ingredientViewModel: IngredientContract.ViewModel by sharedViewModel<IngredientViewModel>()
     private var _binding: FragmentRecipeListBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: RecipeAdapter
