@@ -6,6 +6,6 @@ import io.reactivex.Observable
 
 interface CategoryService {
 
-    @GET("categories")
+    @GET("v2/categories")
     fun getAllCategories(): Observable<CategoryResponse>
 }

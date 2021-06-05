@@ -26,6 +26,9 @@ abstract class RecipeDao {
     @Query("SELECT * FROM recipes WHERE title LIKE '%' || :category || '%'")
     abstract fun getByCategory(category: String): Observable<List<RecipeEntity>>
 
-    @Query("SELECT * FROM recipes WHERE title LIKE '%' || :meal || '%'")
-    abstract fun getByMeal(meal: String): Observable<List<RecipeEntity>>
+    @Query("SELECT * FROM recipes WHERE title LIKE '%' || :input || '%'")
+    abstract fun getByMeal(input: String): Observable<List<RecipeEntity>>
+
+    @Query("SELECT * FROM recipes JOIN ingredients ON recipes.recipe_id = ingredients.recipe_id WHERE ingredients.name LIKE '%' || :input || '%'")
+    abstract fun getByIngredient(input: String): Observable<List<RecipeEntity>>
 }

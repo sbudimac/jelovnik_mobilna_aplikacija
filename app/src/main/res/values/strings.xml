@@ -4,4 +4,6 @@
     <string name="username">Username</string>
     <string name="login">Login</string>
     <string name="_100">100</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="save_recipe">SAVE RECIPE</string>
 </resources>

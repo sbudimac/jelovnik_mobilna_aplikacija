@@ -5,5 +5,6 @@ data class Recipe(
     val socialUrl: Double,
     val publisher: String,
     val id: String,
-    val title: String
+    val title: String,
+    val ingredients: List<String>
 )

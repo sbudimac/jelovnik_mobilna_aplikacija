@@ -1,6 +1,5 @@
 package com.example.rsrafprojekat2stefan_budimac_rn0618.presentation.view.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,11 +7,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.rsrafprojekat2stefan_budimac_rn0618.R
 import com.example.rsrafprojekat2stefan_budimac_rn0618.databinding.FragmentRecipeListBinding
 import com.example.rsrafprojekat2stefan_budimac_rn0618.presentation.contract.RecipeContract
+import com.example.rsrafprojekat2stefan_budimac_rn0618.presentation.view.activities.CategoryActivity
 import com.example.rsrafprojekat2stefan_budimac_rn0618.presentation.view.recycler.adapter.RecipeAdapter
 import com.example.rsrafprojekat2stefan_budimac_rn0618.presentation.view.state.RecipesState
 import com.example.rsrafprojekat2stefan_budimac_rn0618.presentation.viewmodel.RecipeViewModel
@@ -26,7 +28,8 @@ class RecipeListFragment : Fragment(R.layout.fragment_recipe_list) {
     private val binding get() = _binding!!
     private lateinit var adapter: RecipeAdapter
 
-    private var q:String = ""
+    private var category: String = ""
+    private var recipe: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,7 +43,10 @@ class RecipeListFragment : Fragment(R.layout.fragment_recipe_list) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.getString("category")?.let {
-            q = it
+            category = it
+        }
+        arguments?.getString("recipe")?.let {
+            recipe = it
         }
         init()
     }
@@ -52,14 +58,40 @@ class RecipeListFragment : Fragment(R.layout.fragment_recipe_list) {
 
     private fun initUid() {
         initRecycler()
+        initListeners()
     }
 
     private fun initRecycler() {
         binding.recipesRv.layoutManager = LinearLayoutManager(context)
         adapter = RecipeAdapter(Glide.with(this)) {
-            val args = Bundle()
+            (activity as CategoryActivity).supportFragmentManager.commit {
+                var fragment: Fragment?
+                fragment = RecipeDisplayFragment().apply {
+                    arguments = Bundle().apply {
+                        putString("imageUrl", it.imageUrl)
+                        putString("title", it.title)
+                        putString("id", it.id)
+                        putString("publisher", it.publisher)
+                    }
+                }
+                val transaction: FragmentTransaction =
+                    (activity as CategoryActivity).supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.categories_fcv, fragment)
+                transaction.commit()
+            }
         }
         binding.recipesRv.adapter = adapter
+    }
+
+    private fun initListeners() {
+        binding.recipeBack.setOnClickListener {
+            (activity as CategoryActivity).supportFragmentManager.commit {
+                val transaction: FragmentTransaction =
+                    (activity as CategoryActivity).supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.categories_fcv, CategoryListFragment())
+                transaction.commit()
+            }
+        }
     }
 
     private fun initObservers() {
@@ -67,9 +99,14 @@ class RecipeListFragment : Fragment(R.layout.fragment_recipe_list) {
             Timber.e(it.toString())
             renderState(it)
         })
-        Timber.e("WOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO%s", q)
-        recipeViewModel.getAllByCategory(q)
-        recipeViewModel.fetchAllRecipes(q)
+        if (category == "") {
+            recipeViewModel.getAllByMeal(recipe)
+            recipeViewModel.getAllByIngredient(recipe)
+            recipeViewModel.fetchAllRecipes(recipe)
+        } else {
+            recipeViewModel.getAllByCategory(category)
+            recipeViewModel.fetchAllRecipes(category)
+        }
     }
 
     private fun renderState(state: RecipesState) {

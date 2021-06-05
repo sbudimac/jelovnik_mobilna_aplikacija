@@ -13,6 +13,6 @@ interface RecipeContract {
         fun fetchAllRecipes(q: String)
         fun getAllByCategory(category: String)
         fun getAllByMeal(meal: String)
-        fun getAllByIngedient(ingredient: String)
+        fun getAllByIngredient(ingredient: String)
     }
 }

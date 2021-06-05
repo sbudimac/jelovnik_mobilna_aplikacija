@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -14,10 +15,12 @@ import com.bumptech.glide.Glide
 import com.example.rsrafprojekat2stefan_budimac_rn0618.R
 import com.example.rsrafprojekat2stefan_budimac_rn0618.databinding.FragmentCategoryListBinding
 import com.example.rsrafprojekat2stefan_budimac_rn0618.presentation.contract.CategoryContract
+import com.example.rsrafprojekat2stefan_budimac_rn0618.presentation.contract.IngredientContract
 import com.example.rsrafprojekat2stefan_budimac_rn0618.presentation.view.activities.CategoryActivity
 import com.example.rsrafprojekat2stefan_budimac_rn0618.presentation.view.recycler.adapter.CategoryAdapter
 import com.example.rsrafprojekat2stefan_budimac_rn0618.presentation.view.state.CategoriesState
 import com.example.rsrafprojekat2stefan_budimac_rn0618.presentation.viewmodel.CategoryViewModel
+import com.example.rsrafprojekat2stefan_budimac_rn0618.presentation.viewmodel.IngredientViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
 
@@ -72,7 +75,29 @@ class CategoryListFragment : Fragment(R.layout.fragment_category_list) {
     }
 
     private fun initListeners() {
+        binding.categorySearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                (activity as CategoryActivity).supportFragmentManager.commit {
+                    var fragment: Fragment?
+                    fragment = RecipeListFragment().apply {
+                        arguments = Bundle().apply {
+                            putString("recipe", p0)
+                        }
+                    }
+                    val transaction: FragmentTransaction =
+                        (activity as CategoryActivity).supportFragmentManager.beginTransaction()
+                    transaction.replace(R.id.categories_fcv, fragment)
+                    transaction.commit()
+                }
+                return false
+            }
 
+            override fun onQueryTextChange(p0: String?): Boolean {
+                return false
+            }
+        }
+
+        )
     }
 
     private fun initObservers() {

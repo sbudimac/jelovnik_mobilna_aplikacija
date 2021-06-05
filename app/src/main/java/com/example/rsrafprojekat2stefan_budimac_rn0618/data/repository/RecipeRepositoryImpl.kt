@@ -2,6 +2,7 @@ package com.example.rsrafprojekat2stefan_budimac_rn0618.data.repository
 
 import com.example.rsrafprojekat2stefan_budimac_rn0618.data.datasource.local.RecipeDao
 import com.example.rsrafprojekat2stefan_budimac_rn0618.data.datasource.remote.RecipeService
+import com.example.rsrafprojekat2stefan_budimac_rn0618.data.model.Ingredient
 import com.example.rsrafprojekat2stefan_budimac_rn0618.data.model.Recipe
 import com.example.rsrafprojekat2stefan_budimac_rn0618.data.model.RecipeEntity
 import com.example.rsrafprojekat2stefan_budimac_rn0618.data.model.Resource
@@ -44,7 +45,8 @@ class RecipeRepositoryImpl(
                         it.socialUrl,
                         it.publisher,
                         it.recipeId,
-                        it.title
+                        it.title,
+                        ArrayList()
                     )
                 }
             }
@@ -60,13 +62,27 @@ class RecipeRepositoryImpl(
                         it.socialUrl,
                         it.publisher,
                         it.recipeId,
-                        it.title
+                        it.title,
+                        ArrayList()
                     )
                 }
             }
     }
 
-    override fun getAllByIngedient(ingredient: String): Observable<List<Recipe>> {
-        TODO("Not yet implemented")
+    override fun getAllByIngredient(ingredient: String): Observable<List<Recipe>> {
+        return localDataSource
+            .getByIngredient(ingredient)
+            .map {
+                it.map {
+                    Recipe(
+                        it.imageUrl,
+                        it.socialUrl,
+                        it.publisher,
+                        it.recipeId,
+                        it.title,
+                        ArrayList()
+                    )
+                }
+            }
     }
 }
