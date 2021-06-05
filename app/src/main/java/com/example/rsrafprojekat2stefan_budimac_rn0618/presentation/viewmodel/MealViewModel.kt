@@ -9,7 +9,11 @@ import com.example.rsrafprojekat2stefan_budimac_rn0618.presentation.view.state.M
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
+import kotlin.concurrent.thread
 
 class MealViewModel(
     private val mealReposiotry: MealReposiotry
@@ -35,6 +39,8 @@ class MealViewModel(
     }
 
     override fun insertMeal(meal: Meal) {
-        mealReposiotry.insertMeal(meal)
+        thread {
+            mealReposiotry.insertMeal(meal)
+        }
     }
 }

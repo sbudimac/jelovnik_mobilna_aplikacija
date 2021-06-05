@@ -15,5 +15,5 @@ abstract class MealDao {
     abstract fun getAllMeals(): Observable<List<MealEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insertMeal(entity: MealEntity): Completable
+    abstract fun insertMeal(entity: MealEntity)
 }
